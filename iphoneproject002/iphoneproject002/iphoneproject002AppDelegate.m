@@ -17,14 +17,42 @@
 
 @synthesize viewController=_viewController;
 
+// 
+@synthesize facebook;
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
      
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    // beging facebook
+    facebook = [[Facebook alloc] initWithAppId:@"129892330417099"];
+    
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+    if ([defaults objectForKey:@"96586fae5e6561831e09c91f3229d696"] 
+    && [defaults objectForKey:@"FBExpirationDateKey"]) {
+        facebook.accessToken = [defaults objectForKey:@"96586fae5e6561831e09c91f3229d696"];
+        facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    }    
+    
+    if (![facebook isSessionValid]) {
+        [facebook authorize:nil delegate:self];
+    }
+
+    
+    // end facebook
     return YES;
 }
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    
+    return [facebook handleOpenURL:url]; 
+}
+
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
@@ -64,6 +92,16 @@
      See also applicationDidEnterBackground:.
      */
 }
+
+
+- (void)fbDidLogin {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setObject:[facebook accessToken] forKey:@"96586fae5e6561831e09c91f3229d696"];
+    [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
+    [defaults synchronize];
+    
+}
+
 
 - (void)dealloc
 {
