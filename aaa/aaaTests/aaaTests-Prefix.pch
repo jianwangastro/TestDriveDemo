@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'aaaTests' target in the 'aaaTests' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+#endif
