@@ -31,7 +31,13 @@
     facebook = [[Facebook alloc] initWithAppId:@"129892330417099"];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//    if ([defaults objectForKey:@"FBAccessTokenKey"] 
+    
+    //if ([defaults objectForKey:@"FBAccessTokenKey"] 
+    //    && [defaults objectForKey:@"FBExpirationDateKey"]) {
+    //    facebook.accessToken = [defaults objectForKey:@"FBAccessTokenKey"];
+    //   facebook.expirationDate = [defaults objectForKey:@"FBExpirationDateKey"];
+    //}
+    
     if ([defaults objectForKey:@"96586fae5e6561831e09c91f3229d696"] 
     && [defaults objectForKey:@"FBExpirationDateKey"]) {
         facebook.accessToken = [defaults objectForKey:@"96586fae5e6561831e09c91f3229d696"];
@@ -39,10 +45,12 @@
     }    
     
     if (![facebook isSessionValid]) {
-        [facebook authorize:nil delegate:self];
+        NSArray* permissions =  [[NSArray arrayWithObjects:@"user_about_me",
+                                  @"user_birthday",@"user_events",
+                                  @"email", @"read_stream", @"user_events",nil] retain];
+        [facebook authorize:permissions delegate:self];
     }
 
-    
     // end facebook
     return YES;
 }
@@ -94,10 +102,14 @@
 }
 
 
+
 - (void)fbDidLogin {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setObject:[facebook accessToken] forKey:@"96586fae5e6561831e09c91f3229d696"];
     [defaults setObject:[facebook expirationDate] forKey:@"FBExpirationDateKey"];
+    
+
+    
     [defaults synchronize];
     
 }
@@ -109,5 +121,8 @@
     [_viewController release];
     [super dealloc];
 }
+
+
+
 
 @end
