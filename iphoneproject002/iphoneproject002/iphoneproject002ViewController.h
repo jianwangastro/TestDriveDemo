@@ -10,7 +10,7 @@
 #import "FBConnect.h"
 
 @interface iphoneproject002ViewController : UIViewController {
-    
+    IBOutlet UIWebView *webView;
 }
 
 @end
