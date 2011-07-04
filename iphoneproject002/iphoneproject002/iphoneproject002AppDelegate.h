@@ -11,10 +11,13 @@
 
 @class iphoneproject002ViewController;
 
-//@interface iphoneproject002AppDelegate : NSObject <UIApplicationDelegate> {
+
 @interface iphoneproject002AppDelegate : NSObject 
-<UIApplicationDelegate, FBSessionDelegate>{
-    Facebook *facebook;
+
+    // handle the Facebook session delegate callback
+    <UIApplicationDelegate, FBSessionDelegate>{
+       
+        Facebook *facebook;
 
 }
 
@@ -22,7 +25,7 @@
 
 @property (nonatomic, retain) IBOutlet iphoneproject002ViewController *viewController;
 
-// facebook part
+// Add a property for an instance of the Facebook class
 @property (nonatomic, retain) Facebook *facebook;
 
 
