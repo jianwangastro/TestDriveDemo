@@ -7,12 +7,54 @@
 //
 
 #import "iphoneproject002ViewController.h"
+#import "secondView.h"
+#import "settings.h"
 
 @implementation iphoneproject002ViewController
 
+-(IBAction)switchView:(id)sender {
+    secondView *second =  [[secondView alloc ] initWithNibName:nil bundle:nil];
+    second.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:second animated:YES];
+}
+
+
+
+-(IBAction)switchSetting:(id)sender {
+    settings *second =  [[settings alloc ] initWithNibName:nil bundle:nil];
+    second.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentModalViewController:second animated:YES];
+}
+
+
+
+
+@synthesize mapview;
+
+-(IBAction) getLocatoion {
+    mapview.showsUserLocation = YES;
+}
+
+-(IBAction)setMap:(id)sender {
+    switch (((UISegmentedControl *) sender).selectedSegmentIndex) {
+        case 0:
+            mapview.mapType  = MKMapTypeStandard;
+            break;
+        case 1:
+            mapview.mapType  = MKMapTypeSatellite;
+            break;
+        case 2:
+            mapview.mapType  = MKMapTypeHybrid;
+            break;
+        default:
+            break;
+    }
+}
+
+
+
 - (void)dealloc
 {
-    [webView release];
     [super dealloc];
 }
 
@@ -31,18 +73,12 @@
  // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad
 {
-    // access google map view
-    NSString *url = @"http://code.google.com/apis/maps/documentation/javascript/examples/map-simple.html";
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
-    [webView loadRequest:request];
     [super viewDidLoad];
 }
 
 
 - (void)viewDidUnload
 {
-    [webView release];
-    webView = nil;
     [super viewDidUnload];
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;

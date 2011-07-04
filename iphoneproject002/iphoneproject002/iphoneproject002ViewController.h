@@ -8,9 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "FBConnect.h"
+#import <MapKit/MapKit.h>
+
 
 @interface iphoneproject002ViewController : UIViewController {
-    IBOutlet UIWebView *webView;
+    MKMapView *mapview;
 }
+
+@property (nonatomic, retain) IBOutlet MKMapView *mapview;
+
+-(IBAction)setMap:(id)sender;
+-(IBAction)getLocatoion;
+-(IBAction)switchView:(id)sender;
+-(IBAction)switchSetting:(id)sender;
 
 @end
